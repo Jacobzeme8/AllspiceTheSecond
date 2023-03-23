@@ -24,6 +24,35 @@ namespace AllspiceTheSecond.Repositories
         return recipeData;
     }
 
+    internal int deleteRecipeById(int id)
+    {
+        string sql = @"
+        DELETE
+        FROM
+        recipe
+        WHERE
+        recipe.id = @id;
+        ";
+        int rows = _db.Execute(sql, new {id});
+        return rows;
+    }
+
+    internal Recipe editRecipe(Recipe oldRecipe)
+    {
+        string sql = @"
+        UPDATE recipe
+        SET
+        title = @title,
+        instructions = @instructions,
+        img = @img,
+        category = @category
+        WHERE
+        recipe.id = @id
+        ;";
+        int rows = _db.ExecuteScalar<int>(sql, oldRecipe);
+        return oldRecipe;
+    }
+
     internal List<Recipe> getAllRecipes()
     {
         string sql = @"
