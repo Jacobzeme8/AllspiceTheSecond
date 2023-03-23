@@ -36,9 +36,22 @@ namespace AllspiceTheSecond.Controllers;
         {
             return BadRequest(e.Message);
         }
+
     }
 
-
+        [HttpGet("{id}")]
+        [Authorize]
+        public  ActionResult<Recipe> getRecipeById(int id){
+            try 
+            {
+                Recipe recipe =  _recipeServices.getRecipeById(id);
+                return recipe;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
 
     }

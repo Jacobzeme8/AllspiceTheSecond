@@ -40,5 +40,25 @@ namespace AllspiceTheSecond.Repositories
         }).ToList();
         return recipes;
     }
+
+    internal Recipe getRecipeById(int id)
+    {
+        string sql = @"
+        SELECT
+        recipe.*,
+        accounts.*
+        FROM recipe
+        JOIN
+        accounts ON recipe.creatorId = accounts.id
+        WHERE
+        recipe.id = @id;
+        ";
+
+        Recipe recipe = _db.Query<Recipe, Account, Recipe>(sql,(recipe, account)=>{
+            recipe.creator = account;
+            return recipe;
+        }, new {id} ).FirstOrDefault();
+        return recipe;
+    }
     }
 }

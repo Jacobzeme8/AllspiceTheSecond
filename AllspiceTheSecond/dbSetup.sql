@@ -57,3 +57,6 @@ INSERT INTO recipe
   *
   FROM recipe
   JOIN accounts ON recipe.creatorId = accounts.id;
+
+
+  

@@ -21,4 +21,10 @@ namespace AllspiceTheSecond.Services;
         List<Recipe> recipes = _repo.getAllRecipes();
         return recipes;
     }
+
+    internal Recipe getRecipeById(int id)
+    {
+        Recipe recipe = _repo.getRecipeById(id);
+        return recipe;
     }
+}
