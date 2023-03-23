@@ -1,22 +1,24 @@
 namespace AllspiceTheSecond.Controllers;
 
-  using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
-  [ApiController]
+    [ApiController]
     [Route("api/recipes")]
     public class RecipeController : ControllerBase
     {
         private readonly RecipeServices _recipeServices;
         private readonly Auth0Provider _auth;
+        private readonly IngredientService _ingredientService;
 
-    public RecipeController(RecipeServices recipeServices, Auth0Provider auth)
-    {
-        _recipeServices = recipeServices;
-        _auth = auth;
-    }
+  public RecipeController(RecipeServices recipeServices, Auth0Provider auth, IngredientService ingredientService)
+  {
+    _recipeServices = recipeServices;
+    _auth = auth;
+    _ingredientService = ingredientService;
+  }
 
 
-    [HttpGet]
+  [HttpGet]
     [Authorize]
     public ActionResult<List<Recipe>> getAllRecipes(){
         List<Recipe> recipes = _recipeServices.getAllRecipes();
@@ -83,7 +85,13 @@ namespace AllspiceTheSecond.Controllers;
                 return BadRequest(e.Message);
             }
         }
- 
+
+        [HttpGet("{id}/ingredients")]
+        public ActionResult<List<Ingredient>> getIngredientsByRecipe(int id){
+            List<Ingredient> ingredients = _ingredientService.getIngredientsByRecipe(id);
+            return ingredients;
+        }
+
     }
 
     
