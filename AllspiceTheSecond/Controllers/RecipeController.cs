@@ -15,5 +15,14 @@ namespace AllspiceTheSecond.Controllers
         _auth = auth;
     }
 
+
+    [HttpGet]
+    [Authorize]
+    public ActionResult<List<Recipe>> getAllRecipes(){
+        List<Recipe> recipes = _recipeServices.getAllRecipes();
+        return recipes;
     }
+    }
+
+    
 }

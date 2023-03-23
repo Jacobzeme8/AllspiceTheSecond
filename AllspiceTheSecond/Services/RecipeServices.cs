@@ -8,5 +8,11 @@ namespace AllspiceTheSecond.Services
     {
         _repo = repo;
     }
+
+    internal List<Recipe> getAllRecipes()
+    {
+        List<Recipe> recipes = _repo.getAllRecipes();
+        return recipes;
+    }
     }
 }
