@@ -1,5 +1,5 @@
-namespace AllspiceTheSecond.Controllers
-{
+namespace AllspiceTheSecond.Controllers;
+
   using Microsoft.AspNetCore.Mvc;
 
   [ApiController]
@@ -22,7 +22,25 @@ namespace AllspiceTheSecond.Controllers
         List<Recipe> recipes = _recipeServices.getAllRecipes();
         return recipes;
     }
+
+    [HttpPost]
+    [Authorize]
+    public async Task<ActionResult<Recipe>> createRecipe([FromBody] Recipe recipeData){
+        try 
+        {
+            Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+            Recipe recipe = _recipeServices.createRecipe(userInfo.Id, recipeData);
+            return recipe;
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+
+
+
     }
 
     
-}

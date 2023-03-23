@@ -9,6 +9,21 @@ namespace AllspiceTheSecond.Repositories
         _db = db;
     }
 
+    internal Recipe createRecipe(Recipe recipeData)
+    {
+        string sql = @"
+        INSERT INTO recipe
+        (title, instructions, img, category, creatorId)
+        VALUES
+        (@title, @instructions, @img, @category, @creatorId);
+        SELECT LAST_INSERT_ID();
+        ;";
+
+        int id = _db.ExecuteScalar<int>(sql, recipeData);
+        recipeData.id = id;
+        return recipeData;
+    }
+
     internal List<Recipe> getAllRecipes()
     {
         string sql = @"
