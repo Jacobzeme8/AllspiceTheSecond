@@ -21,6 +21,11 @@ namespace AllspiceTheSecond.Services
         return ingredient;
     }
 
+    internal string deleteIngredient(int id, Account userInfo)
+    {
+        
+    }
+
     internal List<Ingredient> getIngredientsByRecipe(int recipeId)
     {
         List<Ingredient> ingredients = _repo.getIngredientsByRecipe(recipeId);

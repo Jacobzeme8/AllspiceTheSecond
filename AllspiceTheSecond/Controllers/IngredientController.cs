@@ -24,5 +24,14 @@ namespace AllspiceTheSecond.Controllers
         return ingredient;
     }
 
+    [HttpDelete("{id}")]
+    [Authorize]
+
+    public async Task<ActionResult<String>> deleteIngredient(int id){
+        Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+        string message = _ingredientService.deleteIngredient(id, userInfo);
+        return message;
+    }
+
     }
 }
