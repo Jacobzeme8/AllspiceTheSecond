@@ -23,7 +23,9 @@ namespace AllspiceTheSecond.Services
 
     internal string deleteIngredient(int id, Account userInfo)
     {
-        
+        int rows = _repo.deleteIngredient(id);
+        string message = $"{rows} ingredient has been deleteds";
+        return message;
     }
 
     internal List<Ingredient> getIngredientsByRecipe(int recipeId)
