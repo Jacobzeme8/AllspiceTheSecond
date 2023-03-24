@@ -12,7 +12,7 @@ class RecipesService{
     return AppState.recipes
   }
 
-  async getMyRecipes(gottenRecipes){
+  async getMyRecipes(){
     const res = await api.get('api/recipes')
     const recipes = res.data.filter(d => d.creatorId = AppState.account.id)
 
@@ -24,6 +24,11 @@ class RecipesService{
     const res = await api.get('account/favorites')
     // logger.log(res.data)
     AppState.recipes = res.data.map(m => new Recipe(m))
+  }
+
+  setActiveRecipe(recipeId){
+    AppState.acitiveRecipe = AppState.recipes.find(r => r.id = recipeId)
+    logger.log(AppState.acitiveRecipe)
   }
 
 
