@@ -19,7 +19,6 @@ namespace AllspiceTheSecond.Controllers;
 
 
   [HttpGet]
-    [Authorize]
     public ActionResult<List<Recipe>> getAllRecipes(){
         List<Recipe> recipes = _recipeServices.getAllRecipes();
         return recipes;
