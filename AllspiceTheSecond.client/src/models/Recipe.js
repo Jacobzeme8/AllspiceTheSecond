@@ -9,6 +9,7 @@ export class Recipe{
     this.creatorId = data.creatorId
     this.creator = data.creator || null
     this.favoriteId = data.favoriteId || null
+    this.instructions = data.instructions
   }
 
 }

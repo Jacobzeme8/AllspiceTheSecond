@@ -31,6 +31,20 @@ class RecipesService{
     logger.log(AppState.acitiveRecipe)
   }
 
+  async getRecipeIngredients(recipeId){
+    const res = await api.get(`api/recipes/${recipeId}/ingredients`)
+    AppState.ingredients = res.data
+    // logger.log(AppState.ingredients)
+  }
+
+  async deleteRecipe(recipeId){
+    const index = AppState.recipes.findIndex( r=> r.id == recipeId)
+    AppState.recipes.splice(index, 1)
+    const res = await api.delete(`api/recipes/${recipeId}`)
+    logger.log(res.data)
+  }
+
+
 
 }
 

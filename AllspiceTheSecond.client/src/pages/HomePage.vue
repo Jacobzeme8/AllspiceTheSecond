@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-10 m-auto d-flex justify-content-between my-3">
+      <div v-if="account.id" class="col-10 m-auto d-flex justify-content-between my-3">
         <button @click="getAllrecipes()" class="btn btn-primary">All</button>
         <button @click="getMyFavoriteRecipes()" class="btn btn-primary">My Favorites</button>
         <button @click="getMyRecipes()" class="btn btn-primary">My recipes</button>
@@ -39,6 +39,7 @@ export default {
 
     return {
       recipes: computed(() => AppState.recipes),
+      account: computed(() => AppState.account),
       getAllrecipes,
       async getMyRecipes() {
         try {

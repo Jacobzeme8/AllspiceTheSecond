@@ -1,7 +1,7 @@
 <template>
   <div class="card d-flex align-items-center">
-    <img @click="setActiveRecipe(recipe.id)" class="img-fluid recipe-img selectable " :src="recipe.img"
-      data-bs-toggle="modal" data-bs-target="#recipe-modal" alt="">
+    <img @click="setActiveRecipe(recipe.id), getRecipeIngredients(recipe.id)" class="img-fluid recipe-img selectable "
+      :src="recipe.img" data-bs-toggle="modal" data-bs-target="#recipe-modal" alt="">
     <p>Title: {{ recipe.title }}</p>
     <p>Category: {{ recipe.category }}</p>
   </div>
@@ -17,6 +17,8 @@ import { recipesService } from "../services/RecipesService";
 import RecipeDetailes from "./RecipeDetailes.vue";
 import { computed } from "@vue/reactivity";
 import { AppState } from "../AppState";
+import { logger } from "../utils/Logger";
+import Pop from "../utils/Pop";
 
 export default {
   props: {
@@ -30,6 +32,14 @@ export default {
       activeRecipe: computed(() => AppState.acitiveRecipe),
       setActiveRecipe(recipeId) {
         recipesService.setActiveRecipe(recipeId)
+      },
+      async getRecipeIngredients(recipeId) {
+        try {
+          await recipesService.getRecipeIngredients(recipeId)
+        } catch (error) {
+          logger.error(error)
+          Pop.error(error)
+        }
       }
 
     };
