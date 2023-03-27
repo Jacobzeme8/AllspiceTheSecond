@@ -27,7 +27,7 @@ class RecipesService{
   }
 
   setActiveRecipe(recipeId){
-    AppState.acitiveRecipe = AppState.recipes.find(r => r.id = recipeId)
+    AppState.acitiveRecipe = AppState.recipes.find(r => r.id == recipeId)
     logger.log(AppState.acitiveRecipe)
   }
 

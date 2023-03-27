@@ -6,7 +6,7 @@
     <p>Category: {{ recipe.category }}</p>
   </div>
   <Modal id="recipe-modal">
-    <RecipeDetailes :activeRecipe="acitiveRecipe" />
+    <RecipeDetailes />
   </Modal>
 </template>
 
@@ -16,6 +16,7 @@ import { Recipe } from "../models/Recipe";
 import { recipesService } from "../services/RecipesService";
 import RecipeDetailes from "./RecipeDetailes.vue";
 import { computed } from "@vue/reactivity";
+import { AppState } from "../AppState";
 
 export default {
   props: {
