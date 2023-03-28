@@ -44,6 +44,10 @@ class RecipesService{
     logger.log(res.data)
   }
 
+  async favoriteRecipe(favoriteData){
+    const res = await api.post('api/favorites', favoriteData)
+    logger.log(res.data)
+  }
 
 
 }

@@ -4,6 +4,7 @@
       :src="recipe.img" data-bs-toggle="modal" data-bs-target="#recipe-modal" alt="">
     <p>Title: {{ recipe.title }}</p>
     <p>Category: {{ recipe.category }}</p>
+    <i @click="favoriteRecipe(account.id, recipe.id)" class="mdi mdi-star text-warning selectable fs-3"></i>
   </div>
   <Modal id="recipe-modal">
     <RecipeDetailes />
@@ -29,6 +30,7 @@ export default {
   },
   setup() {
     return {
+      account: (() => AppState.account),
       activeRecipe: computed(() => AppState.acitiveRecipe),
       setActiveRecipe(recipeId) {
         recipesService.setActiveRecipe(recipeId)
@@ -39,6 +41,18 @@ export default {
         } catch (error) {
           logger.error(error)
           Pop.error(error)
+        }
+      },
+
+      async favoriteRecipe(accountId, recipeId) {
+        try {
+          const favoriteData = {
+            accountId: accountId,
+            recipeId: recipeId
+          }
+          await recipesService.favoriteRecipe(favoriteData)
+        } catch (error) {
+
         }
       }
 
