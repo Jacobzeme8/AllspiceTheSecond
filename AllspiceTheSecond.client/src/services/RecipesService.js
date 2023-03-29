@@ -57,6 +57,12 @@ class RecipesService{
 
   }
 
+  async updateIngredient(ingredient){
+    logger.log(ingredient)
+    const res = await api.put(`api/ingredients/${ingredient.id}`, ingredient)
+    logger.log(res.data)
+  }
+
 
 }
 

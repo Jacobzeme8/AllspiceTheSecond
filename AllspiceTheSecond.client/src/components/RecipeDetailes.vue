@@ -12,25 +12,34 @@
       <div class="component">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-6">
+            <div class="col-7">
               <h3>Ingredients</h3>
               <div v-for="ingredient in ingredients">
-                <p>{{ ingredient.quantity }} {{ ingredient.name }} <i v-if="recipe.creatorId == account.id"
-                    class="mdi mdi-delete fs-3 text-danger selectable" @click="deleteIngredient(ingredient.id)"></i> </p>
+                <form @submit.prevent="updateIngredient(ingredient)" class="d-flex flex-row my-2">
+                  <input class="form-control h-50" :disabled="account.id != recipe.creatorId" type="text"
+                    v-model="ingredient.quantity">
+                  <input class="form-control h-50" :disabled="account.id != recipe.creatorId" type="text"
+                    v-model="ingredient.name">
+                  <div>
+                    <button class="btn btn-success">update</button>
+                  </div>
+                </form>
+                <!-- <p>{{ ingredient.quantity }} {{ ingredient.name }} <i v-if="recipe.creatorId == account.id"
+                    class="mdi mdi-delete fs-3 text-danger selectable" @click="deleteIngredient(ingredient.id)"></i> </p> -->
               </div>
-              <div v-if="recipe.creatorId == account.id">
+              <div class="mt-4" v-if="recipe.creatorId == account.id">
                 <form @submit.prevent="addIngredient(recipe.id)" class="d-flex flex-row">
                   <input v-model="editable.name" type="text" class="form-control h-50" id="exampleFormControlInput1"
                     placeholder="ingredient">
                   <input v-model="editable.quantity" type="text" class="form-control h-50" id="exampleFormControlInput1"
                     placeholder="quantity">
-                  <button type="submit" class="btn btn-primary h-50">Add ingredient</button>
+                  <button type="submit" class="btn btn-primary h-50">Add</button>
                 </form>
               </div>
               <h3>Instructions</h3>
               <p>{{ recipe.instructions }}</p>
             </div>
-            <div class="col-6">
+            <div class="col-5">
               <img class="img-fluid" :src="recipe.img" alt="">
             </div>
           </div>
@@ -61,7 +70,9 @@ export default {
 
   setup() {
     const editable = ref({})
+    const ingredientData = ref({})
     return {
+      ingredientData,
       editable,
       recipe: computed(() => AppState.acitiveRecipe),
       ingredients: computed(() => AppState.ingredients),
@@ -98,7 +109,18 @@ export default {
           logger.error(error)
           Pop.error(error)
         }
+      },
+
+      async updateIngredient(ingredient) {
+        try {
+          await recipesService.updateIngredient(ingredient)
+        } catch (error) {
+          Pop.error(error)
+          logger.error(error)
+        }
       }
+
+
     }
   }
 }

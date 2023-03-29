@@ -38,6 +38,19 @@ namespace AllspiceTheSecond.Repositories
         return rows;
     }
 
+    internal Ingredient findOne(int id)
+    {
+        string sql = @"
+        SELECT
+        *
+        FROM ingredients
+        WHERE id = @id;
+        ";
+
+        Ingredient ingredient = _db.Query(sql, new{id}).FirstOrDefault();
+        return ingredient;
+    }
+
     internal List<Ingredient> getIngredientsByRecipe(int recipeId)
     {
         string sql = @"
@@ -50,6 +63,21 @@ namespace AllspiceTheSecond.Repositories
 
         List<Ingredient> ingredients = _db.Query<Ingredient>(sql, new {recipeId}).ToList();
         return ingredients;
+    }
+
+    internal Ingredient updateIngredient(Ingredient original, int id)
+    {
+        string sql = @"
+        UPDATE ingredients
+        SET
+        name = @name
+        quantity = @quantity
+        WHERE id = @id
+        ;
+        ";
+
+        int row = _db.Execute(sql, original);
+        return original;
     }
     }
 }

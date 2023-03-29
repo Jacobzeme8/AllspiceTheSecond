@@ -28,6 +28,15 @@ namespace AllspiceTheSecond.Services
         return message;
     }
 
+    internal Ingredient editIngredient(Ingredient updata, int id)
+    {
+        Ingredient original = _repo.findOne(id);
+        original.name = updata.name;
+        original.quantity = updata.quantity;
+        Ingredient ingredient = _repo.updateIngredient(original, id);
+        return ingredient;
+    }
+
     internal List<Ingredient> getIngredientsByRecipe(int recipeId)
     {
         List<Ingredient> ingredients = _repo.getIngredientsByRecipe(recipeId);

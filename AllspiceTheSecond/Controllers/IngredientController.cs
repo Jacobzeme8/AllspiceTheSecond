@@ -33,5 +33,21 @@ namespace AllspiceTheSecond.Controllers
         return message;
     }
 
+    [HttpPut]
+    [Authorize("{id}")]
+
+    public async Task<ActionResult<Ingredient>> editIngredient([FromBody] Ingredient updata, int id){
+        try 
+        {
+            Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+            Ingredient ingredient = _ingredientService.editIngredient(updata, id);
+            return ingredient;
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
     }
 }
