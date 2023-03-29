@@ -10,6 +10,11 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
+      <div v-if="recipes">
+        <label for="searchPosts" class="form-label">Search Posts:</label>
+        <input v-model="editable.search" type="text" id="searchPosts" class="form-control" aria-describedby="searchPosts"
+          name="body">
+      </div>
       <ul class="navbar-nav me-auto">
         <li>
           <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
@@ -30,10 +35,30 @@
 </template>
 
 <script>
+import { ref, watchEffect, computed } from "vue";
+import { AppState } from "../AppState";
 import Login from './Login.vue'
 export default {
   setup() {
-    return {}
+
+    const editable = ref({})
+
+    function searchCategory() {
+      if (editable.value == null) { return }
+      if (AppState.allRecipes == null) { return }
+      AppState.recipes = AppState.allRecipes.filter(r => r.category.toLowerCase().includes(editable.value.search.toLowerCase()))
+    }
+
+    watchEffect(() => {
+      if (editable.value.search) {
+        searchCategory()
+      }
+    })
+
+    return {
+      editable,
+      recipes: computed(() => AppState.allRecipes)
+    }
   },
   components: { Login }
 }

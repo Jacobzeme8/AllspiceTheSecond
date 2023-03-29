@@ -9,6 +9,7 @@ class RecipesService{
     const res = await api.get('api/recipes')
     // logger.log(res.data)
     AppState.recipes = res.data.map(m => new Recipe(m))
+    AppState.allRecipes = res.data.map(m => new Recipe(m))
     return AppState.recipes
   }
 
