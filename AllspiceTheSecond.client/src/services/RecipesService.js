@@ -49,6 +49,13 @@ class RecipesService{
     logger.log(res.data)
   }
 
+  async createRecipe(recipeData){
+    const res = await api.post('api/recipes', recipeData)
+    logger.log(res.data)
+    AppState.recipes.push(res.data)
+
+  }
+
 
 }
 

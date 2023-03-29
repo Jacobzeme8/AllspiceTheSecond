@@ -8,15 +8,15 @@
       </div>
       <div class="modal-body">
 
-        <form @submit.prevent="">
+        <form @submit.prevent="createRecipe()">
           <label class="form-label">Recipe Name</label>
-          <input required type="text" class="form-control">
+          <input v-model="editable.title" required type="text" class="form-control">
           <label class="form-label">Recipe Image</label>
-          <input required type="text" class="form-control">
+          <input v-model="editable.img" required type="text" class="form-control">
           <label class="form-label">Instructions</label>
-          <textarea required class="w-100 rounded mt-2" name="instructions" id="instructions" cols="30"
-            rows="10"></textarea>
-          <select required class="form-select" aria-label="Default select example">
+          <textarea v-model="editable.instructions" required class="w-100 rounded mt-2" name="instructions"
+            id="instructions" cols="30" rows="10"></textarea>
+          <select v-model="editable.category" required class="form-select" aria-label="Default select example">
             <option selected value="Soup">Soup</option>
             <option value="Italian">Italian</option>
             <option value="Cheese">Cheese</option>
@@ -32,9 +32,29 @@
 
 
 <script>
+import { ref } from "vue";
+import { recipesService } from "../services/RecipesService";
+import { logger } from "../utils/Logger";
+import Pop from "../utils/Pop";
+
 export default {
   setup() {
-    return {}
+
+    const editable = ref({})
+
+    return {
+      editable,
+      async createRecipe() {
+        try {
+          const recipeData = editable.value
+          await recipesService.createRecipe(recipeData)
+          editable.value = {}
+        } catch (error) {
+          Pop.error(error)
+          logger.error(error)
+        }
+      }
+    }
   }
 }
 </script>
