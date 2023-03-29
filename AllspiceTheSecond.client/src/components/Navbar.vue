@@ -5,15 +5,8 @@
         <img alt="logo" src="../assets/img/cw-logo.png" height="45" />
       </div>
     </router-link>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarText"
-      aria-controls="navbarText"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
@@ -23,11 +16,17 @@
             About
           </router-link>
         </li>
+        <li>
+          <button data-bs-target="#create-recipe" data-bs-toggle="modal" class="btn btn-primary">Create Recipe</button>
+        </li>
       </ul>
       <!-- LOGIN COMPONENT HERE -->
       <Login />
     </div>
   </nav>
+  <Modal id="create-recipe">
+    <RecipeForm />
+  </Modal>
 </template>
 
 <script>
@@ -60,5 +59,4 @@ a:hover {
     height: 64px;
   }
 }
-
 </style>
