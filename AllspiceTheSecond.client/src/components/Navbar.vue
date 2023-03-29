@@ -12,8 +12,8 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <div v-if="recipes">
         <label for="searchPosts" class="form-label">Search Posts:</label>
-        <input v-model="editable.search" type="text" id="searchPosts" class="form-control" aria-describedby="searchPosts"
-          name="body">
+        <input v-model="editable.search" @input="searchCategory()" type="text" id="searchPosts" class="form-control"
+          aria-describedby="searchPosts" name="body">
       </div>
       <ul class="navbar-nav me-auto">
         <li>
@@ -37,27 +37,33 @@
 <script>
 import { ref, watchEffect, computed } from "vue";
 import { AppState } from "../AppState";
+import { logger } from "../utils/Logger";
 import Login from './Login.vue'
 export default {
   setup() {
 
-    const editable = ref({})
+    const editable = ref({
+      search: ""
+    })
 
     function searchCategory() {
-      if (editable.value == null) { return }
-      if (AppState.allRecipes == null) { return }
-      AppState.recipes = AppState.allRecipes.filter(r => r.category.toLowerCase().includes(editable.value.search.toLowerCase()))
+      setTimeout(() => {
+        AppState.recipes = AppState.allRecipes.filter(r => r.category.toLowerCase().includes(editable.value.search.toLowerCase()))
+      }, 300)
+      if (editable.value.search == "") { AppState.recipes == AppState.allRecipes, logger.log('filter none') }
+
     }
 
-    watchEffect(() => {
-      if (editable.value.search) {
-        searchCategory()
-      }
-    })
+    // watchEffect(() => {
+    //   if (editable.value.search) {
+    //     searchCategory()
+    //   }
+    // })
 
     return {
       editable,
-      recipes: computed(() => AppState.allRecipes)
+      recipes: computed(() => AppState.allRecipes),
+      searchCategory
     }
   },
   components: { Login }

@@ -1,7 +1,9 @@
 <template>
   <div class="card d-flex align-items-center">
-    <img @click="setActiveRecipe(recipe.id), getRecipeIngredients(recipe.id)" class="img-fluid recipe-img selectable "
-      :src="recipe.img" data-bs-toggle="modal" data-bs-target="#recipe-modal" alt="">
+    <img v-if="recipe.img" @click="setActiveRecipe(recipe.id), getRecipeIngredients(recipe.id)"
+      class="img-fluid recipe-img selectable " :src="recipe.img" data-bs-toggle="modal" data-bs-target="#recipe-modal"
+      alt="">
+    <i v-else class="mdi mdi-loading"></i>
     <p>Title: {{ recipe.title }}</p>
     <p>Category: {{ recipe.category }}</p>
     <i @click="favoriteRecipe(account.id, recipe.id)" class="mdi mdi-star text-warning selectable fs-3"></i>
