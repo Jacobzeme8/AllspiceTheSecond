@@ -33,8 +33,8 @@ namespace AllspiceTheSecond.Controllers
         return message;
     }
 
-    [HttpPut]
-    [Authorize("{id}")]
+    [HttpPut("{id}")]
+    [Authorize]
 
     public async Task<ActionResult<Ingredient>> editIngredient([FromBody] Ingredient updata, int id){
         try 

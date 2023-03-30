@@ -43,11 +43,11 @@ namespace AllspiceTheSecond.Repositories
         string sql = @"
         SELECT
         *
-        FROM ingredients
+        FROM ingredient
         WHERE id = @id;
         ";
 
-        Ingredient ingredient = _db.Query(sql, new{id}).FirstOrDefault();
+        Ingredient ingredient = _db.Query<Ingredient>(sql, new{id}).FirstOrDefault();
         return ingredient;
     }
 
@@ -68,9 +68,9 @@ namespace AllspiceTheSecond.Repositories
     internal Ingredient updateIngredient(Ingredient original, int id)
     {
         string sql = @"
-        UPDATE ingredients
+        UPDATE ingredient
         SET
-        name = @name
+        name = @name,
         quantity = @quantity
         WHERE id = @id
         ;
